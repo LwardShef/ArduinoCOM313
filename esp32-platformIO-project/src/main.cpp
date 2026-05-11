@@ -46,6 +46,9 @@ void setup() {
     Serial.print(".");
   }
   Serial.printf("\nConnected to Wifi network %s at IP %s\n", WiFi.SSID(), WiFi.localIP());
+
+  // LOOK THRU WIFI, FIND WEB SERVER AND CONNECT
+  // PUT INTO ITS OWN FUNCTION AS NEEDS TO BE RERUN IF CONNECTION LOST
 }
 
 void loop() {
