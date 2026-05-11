@@ -83,7 +83,6 @@ String processor(const String& var){
 void setup(){
   // Serial port for debugging purposes
   Serial.begin(115200);
-  Serial.print("test");
 
   pinMode(PIN_1, OUTPUT);
   digitalWrite(PIN_1, LOW);
