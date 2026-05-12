@@ -1,12 +1,10 @@
-#from flask import Flask, request, render_template
-import socketio
-import pyduino
-from flask import Flask, render_template,request, redirect, url_for
-from flask_socketio import SocketIO, send, emit, join_room, leave_room
-import time
+from flask import Flask, render_template,request, redirect, url_for, jsonify
+import json
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = ''
-socketio=SocketIO(app)
+
+data = {'test': []}
 @app.route('/', methods = ['POST','GET'])
 def hello_world():  # put application's code here
     if request.method == 'POST':
@@ -20,12 +18,30 @@ def hello_world():  # put application's code here
         else:
             pass
 
-    return render_template('Home.html')
+    return render_template('Test.html')
 
-@socketio.on('connect')
-def test_connect():
-    print('Client connected')
+@app.route('/data', methods=['POST'])
+def receive_data():
+    try:
+        content = request.get_json()
+
+        test = content['test']
+
+
+        data['test'].append(test)
+
+
+        print(f"Received data: test={test}")
+        return jsonify({'success': True})
+    except Exception as e:
+        print(f"Error receiving data: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)})
+
+
+@app.route('/get_data')
+def get_data():
+    return jsonify(data)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0")

@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="814b00a0-791c-4d0c-bda5-e5da34033e3e" name="Changes" comment="Added PlatformIO project">
-      <change afterPath="$PROJECT_DIR$/ExampleOfWifiUsage.ino" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/Test.html" afterDir="false" />
+    <list default="true" id="814b00a0-791c-4d0c-bda5-e5da34033e3e" name="Changes" comment="okay got thingy working on platformio">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PlatformIO/platformio.ini" beforeDir="false" afterPath="$PROJECT_DIR$/PlatformIO/platformio.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlatformIO/src/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlatformIO/src/example.cpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +103,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1778328535265</updated>
-      <workItem from="1778328536273" duration="11815000" />
+      <workItem from="1778328536273" duration="16432000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -132,7 +129,23 @@
       <option name="project" value="LOCAL" />
       <updated>1778421087506</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="bwuhhhhhh">
+      <option name="closed" value="true" />
+      <created>1778536225597</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1778536225597</updated>
+    </task>
+    <task id="LOCAL-00005" summary="okay got thingy working on platformio">
+      <option name="closed" value="true" />
+      <created>1778538290785</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1778538290785</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,9 +155,11 @@
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Added ESP32 Scripts folder" />
     <MESSAGE value="Added PlatformIO project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added PlatformIO project" />
+    <MESSAGE value="bwuhhhhhh" />
+    <MESSAGE value="okay got thingy working on platformio" />
+    <option name="LAST_COMMIT_MESSAGE" value="okay got thingy working on platformio" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Arduino$Arduino.coverage" NAME="Arduino Coverage Results" MODIFIED="1778329128331" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/Arduino$Arduino.coverage" NAME="Arduino Coverage Results" MODIFIED="1778542383908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
