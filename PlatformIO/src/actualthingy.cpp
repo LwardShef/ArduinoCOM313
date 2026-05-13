@@ -258,7 +258,7 @@ void loop() {
             pattern = switchPattern(pattern);
             sendData();
         }
-
+    }
     if (timer > updateFreq){
         //Serial.printf("Before getData, pattern = %s\n", patternString(pattern));
         getData();
