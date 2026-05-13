@@ -16,6 +16,10 @@ const int GREEN_PIN = 11; //Green
 const int RED_PIN = 12; //Red
 const int BUTTON_PIN = 13; //Button
 
+bool RedState = 0;
+bool GreenState = 0;
+bool YellowState = 0;
+
 const int loopTime = 10; //How often the loop() function runs
 const int updateFreq = 2000; //How often the esp32 updates from http
 const int debounce = 100; //delay on the button triggering updates
@@ -41,29 +45,41 @@ void initWIFI(){
 void patternSolidYellow(){
     Serial.println("solid yellow");
     digitalWrite(YELLOW_PIN, HIGH);
+    YellowState = 1;
     digitalWrite(GREEN_PIN, LOW);
+    GreenState = 0;
     digitalWrite(RED_PIN, LOW);
+    RedState = 0;
 }
 
 void patternSolidGreen(){
     Serial.println("solid green");
     digitalWrite(YELLOW_PIN, LOW);
+    YellowState = 0;
     digitalWrite(GREEN_PIN, HIGH);
+    GreenState = 1;
     digitalWrite(RED_PIN, LOW);
+    RedState = 0;
 }
 
 void patternSolidRed(){
     Serial.println("solid red");
     digitalWrite(YELLOW_PIN, LOW);
+    YellowState = 0;
     digitalWrite(GREEN_PIN, LOW);
+    GreenState = 0;
     digitalWrite(RED_PIN, HIGH);
+    RedState = 1;
 }
 
 void patternOff(){
     Serial.println("all lights off");
     digitalWrite(YELLOW_PIN, LOW);
+    YellowState = 0;
     digitalWrite(GREEN_PIN, LOW);
+    GreenState = 0;
     digitalWrite(RED_PIN, LOW);
+    RedState = 0;
 }
 
 // CHANGING PATTERNS - NEED TO WORK ON THIS
@@ -76,33 +92,51 @@ void patternRainbow(){
     switch(timer / ticksPerIteration) {
         case 0:
             digitalWrite(YELLOW_PIN, HIGH);
+            YellowState = 1;
             digitalWrite(GREEN_PIN, LOW);
+            GreenState = 0;
             digitalWrite(RED_PIN, LOW);
+            RedState = 0;
             break;
         case 1:
             digitalWrite(YELLOW_PIN, HIGH);
+            YellowState = 1;
             digitalWrite(GREEN_PIN, HIGH);
+            GreenState = 1;
             digitalWrite(RED_PIN, LOW);
+            RedState = 0;
             break;
         case 2:
             digitalWrite(YELLOW_PIN, HIGH);
+            YellowState = 1;
             digitalWrite(GREEN_PIN, HIGH);
+            GreenState = 1;
             digitalWrite(RED_PIN, HIGH);
+            RedState = 1;
             break;
         case 3:
             digitalWrite(YELLOW_PIN, LOW);
+            YellowState = 0;
             digitalWrite(GREEN_PIN, HIGH);
+            GreenState = 1;
             digitalWrite(RED_PIN, HIGH);
+            RedState = 1;
             break;
         case 4:
-            digitalWrite(YELLOW_PIN, LOW);
+            digitalWrite(YELLOW_PIN, LOW); 
+            YellowState = 0;
             digitalWrite(GREEN_PIN, LOW);
+            GreenState = 0;
             digitalWrite(RED_PIN, HIGH);
+            RedState = 1;
             break;
         default:
             digitalWrite(YELLOW_PIN, LOW);
+            YellowState = 0;
             digitalWrite(GREEN_PIN, LOW);
+            GreenState = 0;
             digitalWrite(RED_PIN, LOW);
+            RedState = 0;
             break;
     }
 }
@@ -115,18 +149,27 @@ void patternChase(){
     switch(timer / ticksPerIteration) {
         case 0:
             digitalWrite(YELLOW_PIN, HIGH);
+            YellowState = 1;
             digitalWrite(GREEN_PIN, LOW);
+            GreenState = 0;
             digitalWrite(RED_PIN, LOW);
+            RedState = 0;
             break;
         case 1:
             digitalWrite(YELLOW_PIN, LOW);
+            YellowState = 0;
             digitalWrite(GREEN_PIN, HIGH);
+            GreenState = 1;
             digitalWrite(RED_PIN, LOW);
+            RedState = 0;
             break;
         default:
             digitalWrite(YELLOW_PIN, LOW);
+            YellowState = 0;
             digitalWrite(GREEN_PIN, LOW);
+            GreenState = 0;
             digitalWrite(RED_PIN, HIGH);
+            RedState = 1;
             break;
     }
 }
@@ -282,11 +325,11 @@ void setup() {
 void loop() {
     applyPattern(); // update the pattern that we have switched to - with time
     if(digitalRead(BUTTON_PIN) == LOW){
-        if (timer % 100 == 0){
-            Serial.println("button pressed");
-            pattern = switchPattern(pattern);
-            sendData();
-        }
+        Serial.println("button pressed");
+        pattern = switchPattern(pattern);
+        applyPattern();
+        sendData();
+        delay(debounce);
     }
     if (timer > updateFreq){
         //Serial.printf("Before getData, pattern = %s\n", patternString(pattern));
