@@ -247,6 +247,7 @@ void sendData(){
 
     jsonDoc["Pattern"] = patternString(pattern);
     jsonDoc["Temperature"] = temperature;
+    jsonDoc["ButtonPressed"] = digitalRead(BUTTON_PIN);
 
     HTTPClient http;
     http.begin(serverSendAddress);
