@@ -14,6 +14,9 @@ const char* serverGetAddress = "http://192.168.1.212:5000/get_data";
 const int YELLOW_PIN = 10; //Yellow
 const int GREEN_PIN = 11; //Green
 const int RED_PIN = 12; //Red
+
+int ledBuffer[] = {0, 0, 0};
+
 const int BUTTON_PIN = 13; //Button
 
 const int loopTime = 10; //How often the loop() function runs
@@ -40,30 +43,30 @@ void initWIFI(){
 
 void patternSolidYellow(){
     Serial.println("solid yellow");
-    digitalWrite(YELLOW_PIN, HIGH);
-    digitalWrite(GREEN_PIN, LOW);
-    digitalWrite(RED_PIN, LOW);
+    ledBuffer[0] = 1;
+    ledBuffer[1] = 0;
+    ledBuffer[2] = 0;
 }
 
 void patternSolidGreen(){
     Serial.println("solid green");
-    digitalWrite(YELLOW_PIN, LOW);
-    digitalWrite(GREEN_PIN, HIGH);
-    digitalWrite(RED_PIN, LOW);
+    ledBuffer[0] = 0;
+    ledBuffer[1] = 1;
+    ledBuffer[2] = 0;
 }
 
 void patternSolidRed(){
     Serial.println("solid red");
-    digitalWrite(YELLOW_PIN, LOW);
-    digitalWrite(GREEN_PIN, LOW);
-    digitalWrite(RED_PIN, HIGH);
+    ledBuffer[0] = 0;
+    ledBuffer[1] = 0;
+    ledBuffer[2] = 1;
 }
 
 void patternOff(){
     Serial.println("all lights off");
-    digitalWrite(YELLOW_PIN, LOW);
-    digitalWrite(GREEN_PIN, LOW);
-    digitalWrite(RED_PIN, LOW);
+    ledBuffer[0] = 0;
+    ledBuffer[1] = 0;
+    ledBuffer[2] = 0;
 }
 
 // CHANGING PATTERNS - NEED TO WORK ON THIS
@@ -75,34 +78,34 @@ void patternRainbow(){
 
     switch(timer / ticksPerIteration) {
         case 0:
-            digitalWrite(YELLOW_PIN, HIGH);
-            digitalWrite(GREEN_PIN, LOW);
-            digitalWrite(RED_PIN, LOW);
+            ledBuffer[0] = 1;
+            ledBuffer[1] = 0;
+            ledBuffer[2] = 0;
             break;
         case 1:
-            digitalWrite(YELLOW_PIN, HIGH);
-            digitalWrite(GREEN_PIN, HIGH);
-            digitalWrite(RED_PIN, LOW);
+            ledBuffer[0] = 1;
+            ledBuffer[1] = 1;
+            ledBuffer[2] = 0;
             break;
         case 2:
-            digitalWrite(YELLOW_PIN, HIGH);
-            digitalWrite(GREEN_PIN, HIGH);
-            digitalWrite(RED_PIN, HIGH);
+            ledBuffer[0] = 1;
+            ledBuffer[1] = 1;
+            ledBuffer[2] = 1;
             break;
         case 3:
-            digitalWrite(YELLOW_PIN, LOW);
-            digitalWrite(GREEN_PIN, HIGH);
-            digitalWrite(RED_PIN, HIGH);
+            ledBuffer[0] = 0;
+            ledBuffer[1] = 1;
+            ledBuffer[2] = 1;
             break;
         case 4:
-            digitalWrite(YELLOW_PIN, LOW);
-            digitalWrite(GREEN_PIN, LOW);
-            digitalWrite(RED_PIN, HIGH);
+            ledBuffer[0] = 0;
+            ledBuffer[1] = 0;
+            ledBuffer[2] = 1;
             break;
         default:
-            digitalWrite(YELLOW_PIN, LOW);
-            digitalWrite(GREEN_PIN, LOW);
-            digitalWrite(RED_PIN, LOW);
+            ledBuffer[0] = 0;
+            ledBuffer[1] = 0;
+            ledBuffer[2] = 0;
             break;
     }
 }
@@ -114,43 +117,34 @@ void patternChase(){
 
     switch(timer / ticksPerIteration) {
         case 0:
-            digitalWrite(YELLOW_PIN, HIGH);
-            digitalWrite(GREEN_PIN, LOW);
-            digitalWrite(RED_PIN, LOW);
+            ledBuffer[0] = 1;
+            ledBuffer[1] = 0;
+            ledBuffer[2] = 0;
             break;
         case 1:
-            digitalWrite(YELLOW_PIN, LOW);
-            digitalWrite(GREEN_PIN, HIGH);
-            digitalWrite(RED_PIN, LOW);
+            ledBuffer[0] = 0;
+            ledBuffer[1] = 1;
+            ledBuffer[2] = 0;
             break;
         default:
-            digitalWrite(YELLOW_PIN, LOW);
-            digitalWrite(GREEN_PIN, LOW);
-            digitalWrite(RED_PIN, HIGH);
+            ledBuffer[0] = 0;
+            ledBuffer[1] = 0;
+            ledBuffer[2] = 1;
             break;
     }
 }
 
 void patternFlame(){
     Serial.println("flame effect pattern");
-    // TODO using maths to flicker n shit
-    int yellow = digitalRead(YELLOW_PIN);
-    int green = digitalRead(GREEN_PIN);
-    int red = digitalRead(RED_PIN);
-
     if (rand() % 40 == 1) {
-        digitalWrite(YELLOW_PIN, 1 - yellow);
+        ledBuffer[0] = 1 - ledBuffer[0];
     }
     if (rand() % 25 == 1) {
-        digitalWrite(GREEN_PIN, 1 - green);
+        ledBuffer[1] = 1 - ledBuffer[1];
     }
     if (rand() % 60 == 1) {
-        digitalWrite(RED_PIN, 1 - red);
-    }    
-
-    // digitalWrite(YELLOW_PIN, HIGH);
-    // digitalWrite(GREEN_PIN, HIGH);
-    // digitalWrite(RED_PIN, LOW);
+        ledBuffer[2] = 1 - ledBuffer[2];
+    }
 }
 
 // THE BIT WHERE WE REPEAT OURSELVES BC OF C++'S LIMITATIONS
@@ -220,6 +214,12 @@ void applyPattern(){
     }
 }
 
+void changeLights() {
+    digitalWrite(YELLOW_PIN, ledBuffer[0]);
+    digitalWrite(GREEN_PIN, ledBuffer[1]);
+    digitalWrite(RED_PIN, ledBuffer[2]);
+}
+
 void getData(){
     JsonDocument data;
 
@@ -280,7 +280,6 @@ void setup() {
 }
 
 void loop() {
-    applyPattern(); // update the pattern that we have switched to - with time
     if(digitalRead(BUTTON_PIN) == LOW){
         if (timer % 100 == 0){
             Serial.println("button pressed");
@@ -298,6 +297,7 @@ void loop() {
         //Serial.printf("Current pattern: %s\n", patternString(pattern));
     }
     applyPattern();
+    changeLights();
     delay(loopTime);
     timer += loopTime;
 }
