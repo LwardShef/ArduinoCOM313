@@ -11,16 +11,16 @@ const char* password = "CmtkkYCnf42rJqMc";
 const char* serverSendAddress = "http://192.168.1.212:5000/send_data";
 const char* serverGetAddress = "http://192.168.1.212:5000/get_data";
 
-const int PIN_1 = 10; //Yellow
-const int PIN_2 = 11; //Green
-const int PIN_3 = 12; //Red
-const int PIN_4 = 13; //Button
+const int YELLOW_PIN = 10; //Yellow
+const int GREEN_PIN = 11; //Green
+const int RED_PIN = 12; //Red
+const int BUTTON_PIN = 13; //Button
 
 const int loopTime = 10; //How often the loop() function runs
 const int updateFreq = 2000; //How often the esp32 updates from http
 const int debounce = 100; //delay on the button triggering updates
 
-enum Pattern {Solid, Rainbow, Chase, Flame, Off};
+enum Pattern {SolidYellow, SolidGreen, SolidRed, Rainbow, Chase, Flame, Off};
 Pattern pattern = Off;
 
 int timer = 0;
@@ -36,52 +36,119 @@ void initWIFI(){
     Serial.println(WiFi.localIP());
 }
 
-void patternSolid(){
-    Serial.println("Doing Solid");
-    digitalWrite(PIN_1, HIGH);
-    digitalWrite(PIN_2, LOW);
-    digitalWrite(PIN_3, LOW);
+// STATIC PATTERNS
+
+void patternSolidYellow(){
+    Serial.println("solid yellow");
+    digitalWrite(YELLOW_PIN, HIGH);
+    digitalWrite(GREEN_PIN, LOW);
+    digitalWrite(RED_PIN, LOW);
 }
-void patternRainbow(){
-    Serial.println("Doing Rainbow");
-    digitalWrite(PIN_1, LOW);
-    digitalWrite(PIN_2, HIGH);
-    digitalWrite(PIN_3, LOW);
+
+void patternSolidGreen(){
+    Serial.println("solid green");
+    digitalWrite(YELLOW_PIN, LOW);
+    digitalWrite(GREEN_PIN, HIGH);
+    digitalWrite(RED_PIN, LOW);
 }
-void patternChase(){
-    Serial.println("Doing Chase");
-    digitalWrite(PIN_1, LOW);
-    digitalWrite(PIN_2, LOW);
-    digitalWrite(PIN_3, HIGH);
-}
-void patternFlame(){
-    Serial.println("Doing Flame");
-    digitalWrite(PIN_1, HIGH);
-    digitalWrite(PIN_2, HIGH);
-    digitalWrite(PIN_3, LOW);
+
+void patternSolidRed(){
+    Serial.println("solid red");
+    digitalWrite(YELLOW_PIN, LOW);
+    digitalWrite(GREEN_PIN, LOW);
+    digitalWrite(RED_PIN, HIGH);
 }
 
 void patternOff(){
-    Serial.println("Doing Off");
-    digitalWrite(PIN_1, LOW);
-    digitalWrite(PIN_2, LOW);
-    digitalWrite(PIN_3, LOW);
+    Serial.println("all lights off");
+    digitalWrite(YELLOW_PIN, LOW);
+    digitalWrite(GREEN_PIN, LOW);
+    digitalWrite(RED_PIN, LOW);
 }
+
+// CHANGING PATTERNS - NEED TO WORK ON THIS
+
+void patternRainbow(){
+    Serial.println("rainbow pattern");
+    int numPhases = 6;
+    int ticksPerIteration = updateFreq / numPhases;
+
+    switch(timer / ticksPerIteration) {
+        case 0:
+            digitalWrite(YELLOW_PIN, HIGH);
+            digitalWrite(GREEN_PIN, LOW);
+            digitalWrite(RED_PIN, LOW);
+            break;
+        case 1:
+            digitalWrite(YELLOW_PIN, HIGH);
+            digitalWrite(GREEN_PIN, HIGH);
+            digitalWrite(RED_PIN, LOW);
+            break;
+        case 2:
+            digitalWrite(YELLOW_PIN, HIGH);
+            digitalWrite(GREEN_PIN, HIGH);
+            digitalWrite(RED_PIN, HIGH);
+            break;
+        case 3:
+            digitalWrite(YELLOW_PIN, LOW);
+            digitalWrite(GREEN_PIN, HIGH);
+            digitalWrite(RED_PIN, HIGH);
+            break;
+        case 4:
+            digitalWrite(YELLOW_PIN, LOW);
+            digitalWrite(GREEN_PIN, LOW);
+            digitalWrite(RED_PIN, HIGH);
+            break;
+        default:
+            digitalWrite(YELLOW_PIN, LOW);
+            digitalWrite(GREEN_PIN, LOW);
+            digitalWrite(RED_PIN, LOW);
+            break;
+    }
+}
+
+void patternChase(){
+    Serial.println("chasing lights pattern");
+    // TODO
+
+    digitalWrite(YELLOW_PIN, LOW);
+    digitalWrite(GREEN_PIN, LOW);
+    digitalWrite(RED_PIN, HIGH);
+}
+
+void patternFlame(){
+    Serial.println("flame effect pattern");
+    // TODO using maths to flicker n shit
+
+    digitalWrite(YELLOW_PIN, HIGH);
+    digitalWrite(GREEN_PIN, HIGH);
+    digitalWrite(RED_PIN, LOW);
+}
+
+// THE BIT WHERE WE REPEAT OURSELVES BC OF C++'S LIMITATIONS
 
 String patternString(Pattern p){
     switch(p){
-        case Solid  : return "Solid"; 
-        case Rainbow: return "Rainbow";
-        case Chase  : return "Chase";
-        case Flame  : return "Flame";
-        case Off    : return "Off";
+        case SolidYellow: return "SolidYellow"; 
+        case SolidGreen : return "SolidGreen"; 
+        case SolidRed   : return "SolidRed"; 
+        case Rainbow    : return "Rainbow";
+        case Chase      : return "Chase";
+        case Flame      : return "Flame";
+        case Off        : return "Off";
         default: return "Off";
     }
 }
 
 Pattern stringPattern(String p){
-    if (p == "Solid"){
-        return Solid;
+    if (p == "SolidYellow"){
+        return SolidYellow;
+    }
+    else if (p == "SolidGreen"){
+        return SolidGreen;
+    }
+    else if (p == "SolidRed"){
+        return SolidRed;
     }
     else if (p == "Rainbow"){
         return Rainbow;
@@ -102,12 +169,26 @@ Pattern stringPattern(String p){
 
 Pattern switchPattern(Pattern p){
     switch(p){
-        case Off    : return Solid; break;
-        case Solid  : return Rainbow; break;
-        case Rainbow: return Chase; break;
-        case Chase  : return Flame; break;
-        case Flame  : return Off; break;
+        case Off        : return SolidGreen; break;
+        case SolidGreen : return SolidYellow; break;
+        case SolidYellow: return SolidRed; break;
+        case SolidRed   : return Rainbow; break;
+        case Rainbow    : return Chase; break;
+        case Chase      : return Flame; break;
+        case Flame      : return Off; break;
         default: return Off; break;
+    }
+}
+
+void applyPattern(){
+    switch(pattern){
+        case SolidYellow: patternSolidYellow(); break;
+        case SolidGreen : patternSolidGreen(); break;
+        case SolidRed   : patternSolidRed(); break;
+        case Rainbow    : patternRainbow(); break;
+        case Chase      : patternChase(); break;
+        case Flame      : patternFlame(); break;
+        case Off        : patternOff(); break;
     }
 }
 
@@ -158,33 +239,22 @@ void sendData(){
         http.end();
 }
 
-void applyPattern(){
-    switch(pattern){
-        case Solid  : patternSolid(); break;
-        case Rainbow: patternRainbow(); break;
-        case Chase  : patternChase(); break;
-        case Flame  : patternFlame(); break;
-        case Off    : patternOff(); break;
-    }
-}
-
 void setup() {
     Serial.begin(115200);
     Serial.println("setup");
-    pinMode(PIN_1, OUTPUT);
-    pinMode(PIN_2, OUTPUT);
-    pinMode(PIN_3, OUTPUT);
-    pinMode(PIN_4, INPUT_PULLUP);
+    pinMode(YELLOW_PIN, OUTPUT);
+    pinMode(GREEN_PIN, OUTPUT);
+    pinMode(RED_PIN, OUTPUT);
+    pinMode(BUTTON_PIN, INPUT_PULLUP);
     patternOff();
     initWIFI();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-    if(digitalRead(PIN_4) == LOW){
+    applyPattern(); // update the pattern that we have switched to - with time
+    if(digitalRead(BUTTON_PIN) == LOW){
         Serial.println("button pressed");
         pattern = switchPattern(pattern);
-        applyPattern();
         sendData();
         delay(debounce);
     }
@@ -197,7 +267,6 @@ void loop() {
         //Serial.printf("After sendData, pattern = %s\n", patternString(pattern));
         timer = 0;
         //Serial.printf("Current pattern: %s\n", patternString(pattern));
-        applyPattern();
     }
     delay(loopTime);
     timer += loopTime;

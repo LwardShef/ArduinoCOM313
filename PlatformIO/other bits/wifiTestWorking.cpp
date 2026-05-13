@@ -10,9 +10,9 @@ const char* ssid = "TNCAP1E424B";
 const char* password = "CmtkkYCnf42rJqMc";
 const char* serverAddress = "http://192.168.1.212:5000/data";
 
-const int PIN_1 = 10;
-const int PIN_2 = 11;
-const int PIN_3 = 12;
+const int YELLOW_PIN = 10;
+const int GREEN_PIN = 11;
+const int RED_PIN = 12;
 
 void initWIFI(){
     // Connect to Wi-Fi
