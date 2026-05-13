@@ -13,7 +13,7 @@ const int button = 5;
 // WIFI SETUP
 const char* ssid = "TNCAP1E424B";
 const char* password = "CmtkkYCnf42rJqMc";
-const char* host = ""; // where we push these post requests to
+const char* hostIP = "192.168.1.190"; // where we push these post requests to - change last number
 const int httpPort = 80;
 
 // LOOP FUNCTIONS
