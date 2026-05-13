@@ -253,11 +253,11 @@ void setup() {
 void loop() {
     applyPattern(); // update the pattern that we have switched to - with time
     if(digitalRead(BUTTON_PIN) == LOW){
-        Serial.println("button pressed");
-        pattern = switchPattern(pattern);
-        sendData();
-        delay(debounce);
-    }
+        if (timer % 100 == 0){
+            Serial.println("button pressed");
+            pattern = switchPattern(pattern);
+            sendData();
+        }
 
     if (timer > updateFreq){
         //Serial.printf("Before getData, pattern = %s\n", patternString(pattern));
@@ -268,6 +268,7 @@ void loop() {
         timer = 0;
         //Serial.printf("Current pattern: %s\n", patternString(pattern));
     }
+    applyPattern();
     delay(loopTime);
     timer += loopTime;
 }
