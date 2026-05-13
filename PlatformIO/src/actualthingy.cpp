@@ -182,10 +182,11 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
     if(digitalRead(PIN_4) == LOW){
-        Serial.println("button pressed");
-        pattern = switchPattern(pattern);
-        sendData();
-        delay(debounce);
+        if (timer % 100 == 0){
+            Serial.println("button pressed");
+            pattern = switchPattern(pattern);
+            sendData();
+        }
     }
 
     if (timer > updateFreq){

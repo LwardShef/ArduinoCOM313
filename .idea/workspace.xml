@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="814b00a0-791c-4d0c-bda5-e5da34033e3e" name="Changes" comment="Sprucing up webpage">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="814b00a0-791c-4d0c-bda5-e5da34033e3e" name="Changes" comment="made patterns easier to implement">
       <change beforePath="$PROJECT_DIR$/PlatformIO/src/actualthingy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/PlatformIO/src/actualthingy.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,7 +113,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1778328535265</updated>
-      <workItem from="1778328536273" duration="29133000" />
+      <workItem from="1778328536273" duration="29579000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -188,7 +187,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778640136218</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="made patterns easier to implement">
+      <option name="closed" value="true" />
+      <created>1778679844877</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1778679844877</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -204,7 +211,8 @@
     <MESSAGE value="ESP32 Now both sends and recieves data" />
     <MESSAGE value="Button now cycles through modes" />
     <MESSAGE value="Sprucing up webpage" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sprucing up webpage" />
+    <MESSAGE value="made patterns easier to implement" />
+    <option name="LAST_COMMIT_MESSAGE" value="made patterns easier to implement" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Arduino$Arduino.coverage" NAME="Arduino Coverage Results" MODIFIED="1778639836253" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
