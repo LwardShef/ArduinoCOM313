@@ -4,24 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <title>ESP32 tool</title>
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
-<div id="left-column">
-
+<h1 class="title">ESP32 Remote Control</h1>
+<div id="columns">
+    <div id="middle-column">
+        <h2>ESP32 Internal Temperature:</h2>
+        <h1>{{ temperature }}&#176;C</h1>
+    </div>
+    <div id="right-column">
+        <form  action="/" method="post">
+            <p><input type="submit" name="submit" value="Off"> </p>
+            <p><input type="submit" name="submit" value="Solid Colour"> </p>
+            <p><input type="submit" name="submit" value="Rainbow"> </p>
+            <p><input type="submit" name="submit" value="Chase"> </p>
+            <p><input type="submit" name="submit" value="Flame"> </p>
+        </form>
+    </div>
 </div>
-<div id="middle-column">
-    <h1>{{ temperature }}</h1>
-</div>
-<div id="right-column">
-    <form  action="/" method="post">
-        <p><input type="submit" name="submit" value="Off"> </p>
-        <p><input type="submit" name="submit" value="Solid Colour"> </p>
-        <p><input type="submit" name="submit" value="Rainbow"> </p>
-        <p><input type="submit" name="submit" value="Chase"> </p>
-        <p><input type="submit" name="submit" value="Flame"> </p>
-    </form>
-</div>
-
-
 </body>
 </html>
