@@ -37,32 +37,32 @@ void initWIFI(){
 }
 
 void patternSolid(){
-    Serial.println("Doing Solid");
+    //Use timer global variable
     digitalWrite(PIN_1, HIGH);
-    digitalWrite(PIN_2, LOW);
-    digitalWrite(PIN_3, LOW);
+    digitalWrite(PIN_2, HIGH);
+    digitalWrite(PIN_3, HIGH);
 }
 void patternRainbow(){
-    Serial.println("Doing Rainbow");
+    //Use timer global variable
     digitalWrite(PIN_1, LOW);
     digitalWrite(PIN_2, HIGH);
     digitalWrite(PIN_3, LOW);
 }
 void patternChase(){
-    Serial.println("Doing Chase");
+    //Use timer global variable
     digitalWrite(PIN_1, LOW);
     digitalWrite(PIN_2, LOW);
     digitalWrite(PIN_3, HIGH);
 }
 void patternFlame(){
-    Serial.println("Doing Flame");
+    //Use timer global variable
     digitalWrite(PIN_1, HIGH);
     digitalWrite(PIN_2, HIGH);
     digitalWrite(PIN_3, LOW);
 }
 
 void patternOff(){
-    Serial.println("Doing Off");
+    //Use timer global variable
     digitalWrite(PIN_1, LOW);
     digitalWrite(PIN_2, LOW);
     digitalWrite(PIN_3, LOW);
@@ -184,7 +184,6 @@ void loop() {
     if(digitalRead(PIN_4) == LOW){
         Serial.println("button pressed");
         pattern = switchPattern(pattern);
-        applyPattern();
         sendData();
         delay(debounce);
     }
@@ -197,8 +196,8 @@ void loop() {
         //Serial.printf("After sendData, pattern = %s\n", patternString(pattern));
         timer = 0;
         //Serial.printf("Current pattern: %s\n", patternString(pattern));
-        applyPattern();
     }
+    applyPattern();
     delay(loopTime);
     timer += loopTime;
 }
