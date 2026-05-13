@@ -281,11 +281,11 @@ void setup() {
 
 void loop() {
     if(digitalRead(BUTTON_PIN) == LOW){
-        if (timer % 100 == 0){
-            Serial.println("button pressed");
-            pattern = switchPattern(pattern);
-            sendData();
-        }
+        Serial.println("button pressed");
+        pattern = switchPattern(pattern);
+        applyPattern();
+        sendData();
+        delay(debounce);
     }
     if (timer > updateFreq){
         //Serial.printf("Before getData, pattern = %s\n", patternString(pattern));

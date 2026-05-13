@@ -12,8 +12,12 @@ def hello_world():  # put application's code here
         if request.form['submit'] == 'Off':
             data['Pattern'] = "Off"
         # if we press the turn off button
-        elif request.form['submit'] == 'Solid Colour':
-            data['Pattern'] = "Solid"
+        elif request.form['submit'] == 'Yellow':
+            data['Pattern'] = "SolidYellow"
+        elif request.form['submit'] == 'Red':
+            data['Pattern'] = "SolidRed"
+        elif request.form['submit'] == 'Green':
+            data['Pattern'] = "SolidGreen"
         elif request.form['submit'] == 'Rainbow':
             data['Pattern'] = "Rainbow"
         elif request.form['submit'] == 'Chase':
