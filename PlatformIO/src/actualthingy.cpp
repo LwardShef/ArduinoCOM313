@@ -109,20 +109,48 @@ void patternRainbow(){
 
 void patternChase(){
     Serial.println("chasing lights pattern");
-    // TODO
+    int numPhases = 3;
+    int ticksPerIteration = updateFreq / numPhases;
 
-    digitalWrite(YELLOW_PIN, LOW);
-    digitalWrite(GREEN_PIN, LOW);
-    digitalWrite(RED_PIN, HIGH);
+    switch(timer / ticksPerIteration) {
+        case 0:
+            digitalWrite(YELLOW_PIN, HIGH);
+            digitalWrite(GREEN_PIN, LOW);
+            digitalWrite(RED_PIN, LOW);
+            break;
+        case 1:
+            digitalWrite(YELLOW_PIN, LOW);
+            digitalWrite(GREEN_PIN, HIGH);
+            digitalWrite(RED_PIN, LOW);
+            break;
+        default:
+            digitalWrite(YELLOW_PIN, LOW);
+            digitalWrite(GREEN_PIN, LOW);
+            digitalWrite(RED_PIN, HIGH);
+            break;
+    }
 }
 
 void patternFlame(){
     Serial.println("flame effect pattern");
     // TODO using maths to flicker n shit
+    int yellow = digitalRead(YELLOW_PIN);
+    int green = digitalRead(GREEN_PIN);
+    int red = digitalRead(RED_PIN);
 
-    digitalWrite(YELLOW_PIN, HIGH);
-    digitalWrite(GREEN_PIN, HIGH);
-    digitalWrite(RED_PIN, LOW);
+    if (rand() % 40 == 1) {
+        digitalWrite(YELLOW_PIN, 1 - yellow);
+    }
+    if (rand() % 25 == 1) {
+        digitalWrite(GREEN_PIN, 1 - green);
+    }
+    if (rand() % 60 == 1) {
+        digitalWrite(RED_PIN, 1 - red);
+    }    
+
+    // digitalWrite(YELLOW_PIN, HIGH);
+    // digitalWrite(GREEN_PIN, HIGH);
+    // digitalWrite(RED_PIN, LOW);
 }
 
 // THE BIT WHERE WE REPEAT OURSELVES BC OF C++'S LIMITATIONS

@@ -18,9 +18,9 @@ const char* password = "CmtkkYCnf42rJqMc";
 const char* PARAM_INPUT_1 = "output";
 const char* PARAM_INPUT_2 = "state";
 
-const int PIN_1 = 10;
-const int PIN_2 = 11;
-const int PIN_3 = 12;
+const int YELLOW_PIN = 10;
+const int GREEN_PIN = 11;
+const int RED_PIN = 12;
 
 
 // Create AsyncWebServer object on port 80
@@ -64,9 +64,9 @@ String processor(const String& var){
   //Serial.println(var);
   if(var == "BUTTONPLACEHOLDER"){
     String buttons = "";
-    buttons += "<h4>Output - GPIO 10</h4><label class=\"switch\"><input type=\"checkbox\" onchange=\"toggleCheckbox(this)\" id=\"10\" " + outputState(PIN_1) + "><span class=\"slider\"></span></label>";
-    buttons += "<h4>Output - GPIO 11</h4><label class=\"switch\"><input type=\"checkbox\" onchange=\"toggleCheckbox(this)\" id=\"11\" " + outputState(PIN_2) + "><span class=\"slider\"></span></label>";
-    buttons += "<h4>Output - GPIO 12</h4><label class=\"switch\"><input type=\"checkbox\" onchange=\"toggleCheckbox(this)\" id=\"12\" " + outputState(PIN_3) + "><span class=\"slider\"></span></label>";
+    buttons += "<h4>Output - GPIO 10</h4><label class=\"switch\"><input type=\"checkbox\" onchange=\"toggleCheckbox(this)\" id=\"10\" " + outputState(YELLOW_PIN) + "><span class=\"slider\"></span></label>";
+    buttons += "<h4>Output - GPIO 11</h4><label class=\"switch\"><input type=\"checkbox\" onchange=\"toggleCheckbox(this)\" id=\"11\" " + outputState(GREEN_PIN) + "><span class=\"slider\"></span></label>";
+    buttons += "<h4>Output - GPIO 12</h4><label class=\"switch\"><input type=\"checkbox\" onchange=\"toggleCheckbox(this)\" id=\"12\" " + outputState(RED_PIN) + "><span class=\"slider\"></span></label>";
     return buttons;
   }
   return String();
@@ -85,12 +85,12 @@ void setup(){
   // Serial port for debugging purposes
   Serial.begin(115200);
 
-  pinMode(PIN_1, OUTPUT);
-  digitalWrite(PIN_1, LOW);
-  pinMode(PIN_2, OUTPUT);
-  digitalWrite(PIN_2, LOW);
-  pinMode(PIN_3, OUTPUT);
-  digitalWrite(PIN_3, LOW);
+  pinMode(YELLOW_PIN, OUTPUT);
+  digitalWrite(YELLOW_PIN, LOW);
+  pinMode(GREEN_PIN, OUTPUT);
+  digitalWrite(GREEN_PIN, LOW);
+  pinMode(RED_PIN, OUTPUT);
+  digitalWrite(RED_PIN, LOW);
 
   // Connect to Wi-Fi
   WiFi.begin(ssid, password);
