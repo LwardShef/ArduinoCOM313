@@ -37,7 +37,7 @@ const int debounce = 100; //Delay on the button triggering updates, avoids detec
 int timer = 0;
 
 
-// Patterns - enums, procedures and boilerplate code to link between them
+// Patterns defined as enums for more robust assignment
 enum Pattern {SolidYellow, SolidGreen, SolidRed, Rainbow, Chase, Flame, Off};
 Pattern pattern = Off;
 
@@ -70,10 +70,8 @@ void patternOff(){
 // DYNAMIC PATTERNS
 
 void patternRainbow(){
-    //Serial.println("rainbow pattern");
     int numPhases = 6;
     int ticksPerIteration = updateFreq / numPhases;
-
     switch(timer / ticksPerIteration) {
         case 0:
             ledBuffer[0] = 1;
@@ -109,10 +107,8 @@ void patternRainbow(){
 }
 
 void patternChase(){
-    //Serial.println("chasing lights pattern");
     int numPhases = 3;
     int ticksPerIteration = updateFreq / numPhases;
-
     switch(timer / ticksPerIteration) {
         case 0:
             ledBuffer[0] = 1;
@@ -134,7 +130,6 @@ void patternChase(){
 
 // flickering pattern based on randomly switching the LEDs every so often
 void patternFlame(){
-    //Serial.println("flame effect pattern");
     if (rand() % 40 == 1) {
         ledBuffer[0] = !ledBuffer[0];
     }
@@ -147,8 +142,8 @@ void patternFlame(){
 }
 
 // PATTERN ENUM-STRING BOILERPLATE
-
-String patternString(Pattern p){
+// Converts a Pattern to a corresponding String value
+String patternToString(Pattern p){
     switch(p){
         case SolidYellow: return "SolidYellow"; 
         case SolidGreen : return "SolidGreen"; 
@@ -161,7 +156,8 @@ String patternString(Pattern p){
     }
 }
 
-Pattern stringPattern(String p){
+// Converts a string to the corresponding Pattern value
+Pattern stringToPattern(String p){
     if (p == "SolidYellow"){
         return SolidYellow;
     }
@@ -188,7 +184,7 @@ Pattern stringPattern(String p){
     }
 }
 
-// Button pattern-sequence logic
+// Cycles to the next pattern in the sequence, triggered on button press
 Pattern switchPattern(Pattern p){
     switch(p){
         case Off        : return SolidGreen; break;
@@ -214,27 +210,29 @@ void applyPattern(){
     }
 }
 
-// writing the contents of the LED buffer to the light pins
+// Writing the contents of the LED buffer to the light pins
 void changeLights() {
     digitalWrite(YELLOW_PIN, ledBuffer[0]);
     digitalWrite(GREEN_PIN, ledBuffer[1]);
     digitalWrite(RED_PIN, ledBuffer[2]);
 }
 
-// getting data from the server about whether a button has been pressed
+// Requests data from Flask server. This tells the ESP32 if the pattern has been changed on the web page
 void getData(){
+    //Defines JSON variable to store data recieved
     JsonDocument data;
-
+    //Begins HTTP communication with server
     HTTPClient http;
     http.begin(serverGetAddress);
     http.addHeader("Content-Type", "application/json");
+    //Makes the GET request to the server
     int httpResponseCode = http.GET();
-
     if (httpResponseCode > 0) {
+        //Unless connection fails, print the response code
         Serial.printf("HTTP Response code on get : %d\n", httpResponseCode);
         String response = http.getString();
         deserializeJson(data, response);
-        pattern = stringPattern(data["Pattern"]);
+        pattern = stringToPattern(data["Pattern"]);
         //Serial.println(response);
     } else {
         Serial.printf("HTTP Request failed on get : %s\n", http.errorToString(httpResponseCode).c_str());
@@ -244,27 +242,22 @@ void getData(){
 
 // sending data about CPU temp, current pattern and whether the button is currently pressed
 void sendData(){
-
     float temperature = temperatureRead();
     JsonDocument jsonDoc;
-
-    jsonDoc["Pattern"] = patternString(pattern);
+    jsonDoc["Pattern"] = patternToString(pattern);
     jsonDoc["Temperature"] = temperature;
     jsonDoc["ButtonPressed"] = digitalRead(BUTTON_PIN);
 
     HTTPClient http;
     http.begin(serverSendAddress);
-
         http.addHeader("Content-Type", "application/json");
         String payload;
         serializeJson(jsonDoc, payload);
         http.addHeader("Content-Type", "application/json");
         int httpResponseCode = http.POST(payload);
-
         if (httpResponseCode > 0) {
             Serial.printf("HTTP Response code on send: %d\n", httpResponseCode);
             String response = http.getString();
-            //Serial.println(response);
         } else {
             Serial.printf("HTTP Request failed on send: %s\n", http.errorToString(httpResponseCode).c_str());
         }
@@ -283,7 +276,7 @@ void setup() {
 }
 
 void loop() {
-    // button press handler
+    // Button press handler
     if(digitalRead(BUTTON_PIN) == LOW){
         Serial.println("button pressed");
         pattern = switchPattern(pattern);
@@ -291,7 +284,7 @@ void loop() {
         sendData();
         delay(debounce);
     }
-    // sending/receiving data handler
+    // Sending/receiving data handler
     if (timer > updateFreq){
         getData();
         sendData();
