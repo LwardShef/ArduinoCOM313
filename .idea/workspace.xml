@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="814b00a0-791c-4d0c-bda5-e5da34033e3e" name="Changes" comment="buh">
-      <change afterPath="$PROJECT_DIR$/scripts/script.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlatformIO/src/actualthingy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/PlatformIO/src/actualthingy.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/templates/script.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/Home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,6 +79,7 @@
       <recent name="C:\Users\Ram\PycharmProjects\Arduino\PlatformIO\other bits" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Ram\PycharmProjects\Arduino\templates" />
       <recent name="C:\Users\Ram\PycharmProjects\Arduino\static" />
       <recent name="C:\Users\Ram\PycharmProjects\Arduino\PlatformIO\other bits" />
       <recent name="C:\Users\Ram\PycharmProjects\Arduino\PlatformIO" />
@@ -118,6 +120,7 @@
       <option name="presentableId" value="Default" />
       <updated>1778328535265</updated>
       <workItem from="1778328536273" duration="37026000" />
+      <workItem from="1778743061012" duration="5569000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />

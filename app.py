@@ -1,6 +1,4 @@
-from flask import Flask, render_template,request, redirect, url_for, jsonify
-import json
-
+from flask import Flask, render_template,request, jsonify
 app = Flask(__name__)
 app.config['SECRET_KEY'] = ''
 
@@ -27,7 +25,6 @@ def hello_world():  # put application's code here
         else:
             pass
     return render_template('Home.html', temperature = data['Temperature'])
-
 @app.route('/send_data', methods=['POST'])
 def receive_data():
     try:
@@ -49,8 +46,7 @@ def get_data():
 
 @app.route('/get_js_data', methods = ['POST','GET'])
 def get_js_data():
-    return data['temperature']
-
+    return jsonify(data['Temperature'])
 
 if __name__ == '__main__':
     app.run()

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>ESP32 tool</title>
     <link rel="stylesheet" href="../static/style.css">
-    <script src="../scripts/script.js"></script>
+    <!-- <script src="script.js">getTemp()</script> -->
 </head>
 <body>
 <h1 class="title">ESP32 Remote Control</h1>
@@ -27,5 +27,17 @@
         </form>
     </div>
 </div>
+<script>
+        var intervalId = setInterval(function() {
+            console.log("js Running")
+            const url = "/get_js_data"
+            fetch(url)
+            .then(response => response.json())
+            .then(json => {
+                console.log(json);
+                document.getElementById("temperature").innerHTML = JSON.stringify(json)
+            })
+        }, 2000);
+</script>
 </body>
 </html>

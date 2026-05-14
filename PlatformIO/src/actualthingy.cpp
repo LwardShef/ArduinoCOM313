@@ -1,6 +1,4 @@
 #include <WiFi.h>
-//#include <AsyncTCP.h>
-//#include <ESPAsyncWebServer.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 #include <Arduino.h>
@@ -8,15 +6,18 @@
 // Wifi network and server credentials
 const char* ssid = "TNCAP1E424B";
 const char* password = "CmtkkYCnf42rJqMc";
+// Address of the route to send data to
 const char* serverSendAddress = "http://192.168.1.212:5000/send_data";
+// Address of the route to get data from
 const char* serverGetAddress = "http://192.168.1.212:5000/get_data";
 
 void initWIFI(){
     // Connect to Wi-Fi
     WiFi.begin(ssid, password);
+    // Print string every second until connected
     while (WiFi.status() != WL_CONNECTED) {
         delay(1000);
-        Serial.println("Connecting to WiFi..");
+        Serial.println("Connecting to WiFi...");
     }
     // Print ESP Local IP Address
     Serial.println(WiFi.localIP());
@@ -32,39 +33,35 @@ const int BUTTON_PIN = 13;
 // Timing variables
 const int loopTime = 10; //How often the loop() function runs
 const int updateFreq = 2000; //How often the esp32 updates from http
-const int debounce = 100; //delay on the button triggering updates
+const int debounce = 100; //Delay on the button triggering updates, avoids detecting one button press as multiple
 int timer = 0;
 
-// Patterns - enums, procedures and boilerplate code to link between them
 
+// Patterns - enums, procedures and boilerplate code to link between them
 enum Pattern {SolidYellow, SolidGreen, SolidRed, Rainbow, Chase, Flame, Off};
 Pattern pattern = Off;
 
 // STATIC PATTERNS
 
 void patternSolidYellow(){
-    Serial.println("solid yellow");
     ledBuffer[0] = 1;
     ledBuffer[1] = 0;
     ledBuffer[2] = 0;
 }
 
 void patternSolidGreen(){
-    Serial.println("solid green");
     ledBuffer[0] = 0;
     ledBuffer[1] = 1;
     ledBuffer[2] = 0;
 }
 
 void patternSolidRed(){
-    Serial.println("solid red");
     ledBuffer[0] = 0;
     ledBuffer[1] = 0;
     ledBuffer[2] = 1;
 }
 
 void patternOff(){
-    Serial.println("all lights off");
     ledBuffer[0] = 0;
     ledBuffer[1] = 0;
     ledBuffer[2] = 0;
@@ -73,7 +70,7 @@ void patternOff(){
 // DYNAMIC PATTERNS
 
 void patternRainbow(){
-    Serial.println("rainbow pattern");
+    //Serial.println("rainbow pattern");
     int numPhases = 6;
     int ticksPerIteration = updateFreq / numPhases;
 
@@ -112,7 +109,7 @@ void patternRainbow(){
 }
 
 void patternChase(){
-    Serial.println("chasing lights pattern");
+    //Serial.println("chasing lights pattern");
     int numPhases = 3;
     int ticksPerIteration = updateFreq / numPhases;
 
@@ -137,7 +134,7 @@ void patternChase(){
 
 // flickering pattern based on randomly switching the LEDs every so often
 void patternFlame(){
-    Serial.println("flame effect pattern");
+    //Serial.println("flame effect pattern");
     if (rand() % 40 == 1) {
         ledBuffer[0] = !ledBuffer[0];
     }
