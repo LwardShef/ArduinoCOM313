@@ -10,26 +10,24 @@
 <body>
 <h1 class="title">ESP32 Remote Control</h1>
 <div id="columns">
-    <div id="middle-column">
-        <div>
+    <div class="column" id="middle-column">
            <h2>ESP32 Internal Temperature:</h2>
-            <div id="temperature-display">
+            <div class="data-display" id="temperature-display">
                 <h1 id="temperature"></h1>
                 <h1>&#176;C</h1>
             </div>
-            <div>
-                <h1>Current Pattern:</h1>
+            <div class="data-display">
+                <h1>Current Pattern: </h1>
                 <h1 id="pattern"></h1>
             </div>
-            <div>
-                <h1>Button Pressed:</h1>
+            <div class="data-display">
+                <h1>Button Pressed: </h1>
                 <h1 id="button"></h1>
             </div>
-        </div>
 
 
     </div>
-    <div id="right-column">
+    <div class="column" id="right-column">
         <form  action="/" method="post">
             <p><input type="submit" name="submit" value="Off"> </p>
             <p><input type="submit" name="submit" value="Yellow"> </p>
