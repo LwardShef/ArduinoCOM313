@@ -49,5 +49,18 @@ def get_data():
 def get_js_data():
     return jsonify(data)
 
+@app.route('/send_js_data', methods = ['POST','GET'])
+def send_js_data():
+    try:
+        content = request.form
+
+        print(content['Pattern'])
+        data['Pattern'] = content['Pattern']
+        print(data['Pattern'])
+        return jsonify({'success': True})
+    except Exception as e:
+        print(f"Error receiving data: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)})
+
 if __name__ == '__main__':
     app.run()
