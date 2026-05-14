@@ -2,7 +2,7 @@ from flask import Flask, render_template,request, jsonify
 app = Flask(__name__)
 app.config['SECRET_KEY'] = ''
 
-data = {'Pattern': "Solid", 'Temperature': 0}
+data = {'Pattern': "Solid", 'Temperature': 0, 'ButtonPressed' : False}
 @app.route('/', methods = ['POST','GET'])
 def hello_world():  # put application's code here
     if request.method == 'POST':
@@ -32,8 +32,9 @@ def receive_data():
 
         data['Pattern'] = content['Pattern']
         data['Temperature'] = content['Temperature']
+        data['ButtonPressed'] = content['ButtonPressed']
 
-        print(f"Received data: Pattern={data['Pattern']}, Temperature={data['Temperature']}")
+        print(f"Received data: Pattern={data['Pattern']}, Temperature={data['Temperature']}, ButtonPressed={data['ButtonPressed']}")
         return jsonify({'success': True})
     except Exception as e:
         print(f"Error receiving data: {str(e)}")
@@ -46,7 +47,7 @@ def get_data():
 
 @app.route('/get_js_data', methods = ['POST','GET'])
 def get_js_data():
-    return jsonify(data['Temperature'])
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run()

@@ -11,7 +11,7 @@ body{
 #right-column{
     background-color: #e5c890;
 }
-#columns div{
+#middle-column, #right-column{
     display:inline-block;
     padding: 2rem;
     margin: 1rem;
