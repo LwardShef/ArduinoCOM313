@@ -14,6 +14,7 @@ const char* serverGetAddress = "http://192.168.1.212:5000/get_data";
 void initWIFI(){
     // Connect to Wi-Fi
     WiFi.begin(ssid, password);
+    Serial.println("Beginning Connection:");
     // Print string every second until connected
     while (WiFi.status() != WL_CONNECTED) {
         delay(1000);

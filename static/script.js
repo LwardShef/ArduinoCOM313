@@ -20,7 +20,6 @@ function getData(){
             else{
               document.getElementById("button").innerHTML = "True"
             }
-
         })
 }
 

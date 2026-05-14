@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="814b00a0-791c-4d0c-bda5-e5da34033e3e" name="Changes" comment="holy shit i hate javascript">
+    <list default="true" id="814b00a0-791c-4d0c-bda5-e5da34033e3e" name="Changes" comment="w">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlatformIO/src/actualthingy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/PlatformIO/src/espcode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/Home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/Home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +121,7 @@
       <option name="presentableId" value="Default" />
       <updated>1778328535265</updated>
       <workItem from="1778328536273" duration="37026000" />
-      <workItem from="1778743061012" duration="18639000" />
+      <workItem from="1778743061012" duration="20763000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -267,7 +267,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778790444790</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="w">
+      <option name="closed" value="true" />
+      <created>1778790842007</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1778790842007</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -290,7 +298,8 @@
     <MESSAGE value="meowmeow" />
     <MESSAGE value="Fixed it looking jank" />
     <MESSAGE value="holy shit i hate javascript" />
-    <option name="LAST_COMMIT_MESSAGE" value="holy shit i hate javascript" />
+    <MESSAGE value="w" />
+    <option name="LAST_COMMIT_MESSAGE" value="w" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Arduino$Arduino.coverage" NAME="Arduino Coverage Results" MODIFIED="1778639836253" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

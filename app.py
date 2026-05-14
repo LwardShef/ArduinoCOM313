@@ -3,33 +3,13 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = ''
 
 data = {'Pattern': "Solid", 'Temperature': 0, 'ButtonPressed' : False}
-@app.route('/', methods = ['POST','GET'])
+@app.route('/')
 def hello_world():  # put application's code here
-    if request.method == 'POST':
-        # if we press the turn on button
-        if request.form['submit'] == 'Off':
-            data['Pattern'] = "Off"
-        # if we press the turn off button
-        elif request.form['submit'] == 'Yellow':
-            data['Pattern'] = "SolidYellow"
-        elif request.form['submit'] == 'Red':
-            data['Pattern'] = "SolidRed"
-        elif request.form['submit'] == 'Green':
-            data['Pattern'] = "SolidGreen"
-        elif request.form['submit'] == 'Rainbow':
-            data['Pattern'] = "Rainbow"
-        elif request.form['submit'] == 'Chase':
-            data['Pattern'] = "Chase"
-        elif request.form['submit'] == 'Flame':
-            data['Pattern']= "Flame"
-        else:
-            pass
-    return render_template('Home.html', temperature = data['Temperature'])
+    return render_template('Home.html')
 @app.route('/send_data', methods=['POST'])
 def receive_data():
     try:
         content = request.get_json()
-
         data['Pattern'] = content['Pattern']
         data['Temperature'] = content['Temperature']
         data['ButtonPressed'] = content['ButtonPressed']
@@ -39,8 +19,6 @@ def receive_data():
     except Exception as e:
         print(f"Error receiving data: {str(e)}")
         return jsonify({'success': False, 'error': str(e)})
-
-
 @app.route('/get_data', methods = ['POST','GET'])
 def get_data():
     return jsonify(data)
@@ -53,10 +31,7 @@ def get_js_data():
 def send_js_data():
     try:
         content = request.form
-
-        print(content['Pattern'])
         data['Pattern'] = content['Pattern']
-        print(data['Pattern'])
         return jsonify({'success': True})
     except Exception as e:
         print(f"Error receiving data: {str(e)}")
