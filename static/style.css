@@ -11,7 +11,7 @@ body{
     background-color: #e78284;
 }
 #right-column{
-    background-color: #e5c890;
+    background-color: #ef9f76;
 }
 #columns{
     display: flex;
@@ -28,6 +28,7 @@ input{
     width:10rem;
     height: 4rem;
     font-size: large;
+    background-color: #f2d5cf;
 }
 .data-display h1{
     display: inline;

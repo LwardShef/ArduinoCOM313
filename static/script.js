@@ -7,7 +7,6 @@ const chase = document.querySelector("#chase");
 const flame = document.querySelector("#flame");
 
 function getData(){
-    console.log("js Running")
     const url = "/get_js_data"
     fetch(url)
         .then(response => response.json())
