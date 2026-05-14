@@ -5,28 +5,11 @@
 #include <ArduinoJson.h>
 #include <Arduino.h>
 
-// Replace with your network credentials
+// Wifi network and server credentials
 const char* ssid = "TNCAP1E424B";
 const char* password = "CmtkkYCnf42rJqMc";
 const char* serverSendAddress = "http://192.168.1.212:5000/send_data";
 const char* serverGetAddress = "http://192.168.1.212:5000/get_data";
-
-const int YELLOW_PIN = 10; //Yellow
-const int GREEN_PIN = 11; //Green
-const int RED_PIN = 12; //Red
-
-int ledBuffer[] = {0, 0, 0};
-
-const int BUTTON_PIN = 13; //Button
-
-const int loopTime = 10; //How often the loop() function runs
-const int updateFreq = 2000; //How often the esp32 updates from http
-const int debounce = 100; //delay on the button triggering updates
-
-enum Pattern {SolidYellow, SolidGreen, SolidRed, Rainbow, Chase, Flame, Off};
-Pattern pattern = Off;
-
-int timer = 0;
 
 void initWIFI(){
     // Connect to Wi-Fi
@@ -38,6 +21,24 @@ void initWIFI(){
     // Print ESP Local IP Address
     Serial.println(WiFi.localIP());
 }
+
+// LEDs and button definitions
+const int YELLOW_PIN = 10;
+const int GREEN_PIN = 11;
+const int RED_PIN = 12;
+bool ledBuffer[] = {0, 0, 0}; //stores values of LEDs in memory
+const int BUTTON_PIN = 13;
+
+// Timing variables
+const int loopTime = 10; //How often the loop() function runs
+const int updateFreq = 2000; //How often the esp32 updates from http
+const int debounce = 100; //delay on the button triggering updates
+int timer = 0;
+
+// Patterns - enums, procedures and boilerplate code to link between them
+
+enum Pattern {SolidYellow, SolidGreen, SolidRed, Rainbow, Chase, Flame, Off};
+Pattern pattern = Off;
 
 // STATIC PATTERNS
 
@@ -69,7 +70,7 @@ void patternOff(){
     ledBuffer[2] = 0;
 }
 
-// CHANGING PATTERNS - NEED TO WORK ON THIS
+// DYNAMIC PATTERNS
 
 void patternRainbow(){
     Serial.println("rainbow pattern");
@@ -134,20 +135,21 @@ void patternChase(){
     }
 }
 
+// flickering pattern based on randomly switching the LEDs every so often
 void patternFlame(){
     Serial.println("flame effect pattern");
     if (rand() % 40 == 1) {
-        ledBuffer[0] = 1 - ledBuffer[0];
+        ledBuffer[0] = !ledBuffer[0];
     }
     if (rand() % 25 == 1) {
-        ledBuffer[1] = 1 - ledBuffer[1];
+        ledBuffer[1] = !ledBuffer[1];
     }
     if (rand() % 60 == 1) {
-        ledBuffer[2] = 1 - ledBuffer[2];
+        ledBuffer[2] = !ledBuffer[2];
     }
 }
 
-// THE BIT WHERE WE REPEAT OURSELVES BC OF C++'S LIMITATIONS
+// PATTERN ENUM-STRING BOILERPLATE
 
 String patternString(Pattern p){
     switch(p){
@@ -189,6 +191,7 @@ Pattern stringPattern(String p){
     }
 }
 
+// Button pattern-sequence logic
 Pattern switchPattern(Pattern p){
     switch(p){
         case Off        : return SolidGreen; break;
@@ -214,12 +217,14 @@ void applyPattern(){
     }
 }
 
+// writing the contents of the LED buffer to the light pins
 void changeLights() {
     digitalWrite(YELLOW_PIN, ledBuffer[0]);
     digitalWrite(GREEN_PIN, ledBuffer[1]);
     digitalWrite(RED_PIN, ledBuffer[2]);
 }
 
+// getting data from the server about whether a button has been pressed
 void getData(){
     JsonDocument data;
 
@@ -240,6 +245,7 @@ void getData(){
     http.end();
 }
 
+// sending data about CPU temp, current pattern and whether the button is currently pressed
 void sendData(){
 
     float temperature = temperatureRead();
@@ -280,6 +286,7 @@ void setup() {
 }
 
 void loop() {
+    // button press handler
     if(digitalRead(BUTTON_PIN) == LOW){
         Serial.println("button pressed");
         pattern = switchPattern(pattern);
@@ -287,14 +294,11 @@ void loop() {
         sendData();
         delay(debounce);
     }
+    // sending/receiving data handler
     if (timer > updateFreq){
-        //Serial.printf("Before getData, pattern = %s\n", patternString(pattern));
         getData();
-        //Serial.printf("Before sendData, pattern = %s\n", patternString(pattern));
         sendData();
-        //Serial.printf("After sendData, pattern = %s\n", patternString(pattern));
         timer = 0;
-        //Serial.printf("Current pattern: %s\n", patternString(pattern));
     }
     applyPattern();
     changeLights();
