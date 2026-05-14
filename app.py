@@ -47,6 +47,10 @@ def receive_data():
 def get_data():
     return jsonify(data)
 
+@app.route('/get_js_data', methods = ['POST','GET'])
+def get_js_data():
+    return data['temperature']
+
 
 if __name__ == '__main__':
     app.run()
