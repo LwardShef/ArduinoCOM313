@@ -14,8 +14,14 @@ function getData(){
         .then(json => {
             console.log(json);
             document.getElementById("temperature").innerHTML = JSON.stringify(json.Temperature)
-            document.getElementById("pattern").innerHTML = JSON.stringify(json.Pattern)
-            document.getElementById("button").innerHTML = JSON.stringify(json.ButtonPressed)
+            document.getElementById("pattern").innerHTML = JSON.stringify(json.Pattern).replace("\"", "").replace("\"", "")
+            if (JSON.stringify(json.ButtonPressed) === "1"){
+                document.getElementById("button").innerHTML = "False"
+            }
+            else{
+              document.getElementById("button").innerHTML = "True"
+            }
+
         })
 }
 
